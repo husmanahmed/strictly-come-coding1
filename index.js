@@ -12,13 +12,24 @@ lineReader.on('line', (line) => {
   const parts = line.split(';');
 
   const station = parts[0];
-  const temperature = parts[1];
+  const temperature = parseFloat(parts[1]);
 
-  data.set(station, {
-    min:  temperature,
-    mean: temperature,
-    max: temperature
-  });
+  const existingData = data.get(station);
+
+  // if there is no existingData
+  if (!existingData) {
+    data.set(station, {
+      min:  temperature,
+      sum: temperature,
+      count: 0,
+      max: temperature,
+    });
+  } else {
+    existingData.min = Math.min(existingData.min, temperature);
+    existingData.sum += temperature;
+    existingData.count++;
+    existingData.max = Math.max(existingData.max, temperature);
+  }
 });
 
 // log data when file is closed
@@ -28,6 +39,9 @@ lineReader.on('close', () => {
 
   keys.forEach((station) => {
     let temperature = data.get(station);
-    console.log(`${station};${(Math.round(temperature.min * 10) / 10).toFixed(1)};${(Math.round(temperature.mean * 10) / 10).toFixed(1)};${(Math.round(temperature.max * 10) / 10).toFixed(1)}`);
+    console.log(`${station};
+      ${(Math.round(temperature.min * 10) / 10).toFixed(1)};
+      ${(Math.round((temperature.sum/temperature.count) * 10) / 10).toFixed(1)};
+      ${(Math.round(temperature.max * 10) / 10).toFixed(1)}`);
   });
 });
