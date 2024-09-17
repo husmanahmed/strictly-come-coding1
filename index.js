@@ -23,7 +23,11 @@ lineReader.on('line', (line) => {
 
 // log data when file is closed
 lineReader.on('close', () => {
-  data.forEach((temperature, station) => {
+  //alphabetically sorted keys
+  let keys =[ ...data.keys() ].sort();
+
+  keys.forEach((station) => {
+    let temperature = data.get(station);
     console.log(`${station};${(Math.round(temperature.min * 10) / 10).toFixed(1)};${(Math.round(temperature.mean * 10) / 10).toFixed(1)};${(Math.round(temperature.max * 10) / 10).toFixed(1)}`);
-  })
+  });
 });
