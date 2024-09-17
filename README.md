@@ -1,1 +1,3 @@
-# strictly-come-coding1
+# strictly-come-coding
+
+Node.Js JavaScript implementation
