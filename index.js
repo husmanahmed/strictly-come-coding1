@@ -8,18 +8,22 @@ const lineReader = readline.createInterface({
 });
 
 // read file line by line
-lineReader.on('line', function (line) {
+lineReader.on('line', (line) => {
   const parts = line.split(';');
 
   const station = parts[0];
   const temperature = parts[1];
 
-  data.set(station, temperature);
+  data.set(station, {
+    min:  temperature,
+    mean: temperature,
+    max: temperature
+  });
 });
 
 // log data when file is closed
 lineReader.on('close', () => {
   data.forEach((temperature, station) => {
-    console.log(`${station};${temperature}`);
+    console.log(`${station};${(Math.round(temperature.min * 10) / 10).toFixed(1)};${(Math.round(temperature.mean * 10) / 10).toFixed(1)};${(Math.round(temperature.max * 10) / 10).toFixed(1)}`);
   })
 });
