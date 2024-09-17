@@ -1,7 +1,7 @@
-const fs = require('node:fs');
-const readline = require('node:readline');
+import * as readline from 'node:readline';
+import * as fs from 'node:fs';
 
-var lineReader = readline.createInterface({
+const lineReader = readline.createInterface({
   input: fs.createReadStream('measurements_test.txt')
 });
 
