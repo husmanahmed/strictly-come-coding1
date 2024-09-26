@@ -2,7 +2,7 @@
 
 ## Node.Js JavaScript implementation
 
-A pure Javascript implementation of reading 1 Billion lines of data and averaging them and sorting them.
+A pure Javascript (NodeJS) implementation of reading 1 Billion lines of data and averaging them and sorting them.
 
 ## Running
 
